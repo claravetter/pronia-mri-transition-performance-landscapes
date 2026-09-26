@@ -1,0 +1,59 @@
+version: pronia_landscapes_0.3.1
+upstream_boundary: authorized_harmonized_cohort_table_with_frozen_model_outputs
+reference_cohort: NAPLS-3
+cohorts:
+  PRONIA: {"N": 329, events: 26}
+  NAPLS-3: {"N": 458, events: 51}
+  ZInEP: {"N": 157, events: 23}
+  FePsy: {"N": 37, events: 16}
+  MUC-FRUE: {"N": 33, events: 16}
+populations:
+  symptom_complete: {"N": 658, events: 84}
+  functioning_complete: {"N": 254, events: 38}
+landscape:
+  primary_width: 0.20
+  primary_step: 0.05
+  minimum_events: 7
+  minimum_non_events: 7
+  sensitivity_widths: [0.15, 0.20, 0.25, 0.30]
+  sensitivity_step_divisor: 4
+  sensitivity_support: 10
+  tolerance: 1.0e-12
+  interval: left_closed_right_open_final_right_closed
+permutations:
+  seed_base: 20260913
+  rng: L_Ecuyer_CMRG
+  validity: conditional_on_finite_draws_with_method_review_if_any_invalid
+  analysis_stream: SHA256_analysis_id_and_seed_first_28_bits
+  replicate_stream: nextRNGStream
+full:
+  permutations: 5000
+  local_auc_bootstrap: 2000
+  pooled_calibration_bootstrap: 2000
+  source_cohort_heldout_bootstrap: 500
+  loco_bootstrap: 2000
+  fisher_simulations: 20000
+  gam_kcheck: 400
+  gam_simulations: 1000
+synthetic:
+  seed: 91522
+  participants_per_cohort: 120
+  permutations: 9
+  local_auc_bootstrap: 20
+  pooled_calibration_bootstrap: 20
+  source_cohort_heldout_bootstrap: 20
+  loco_bootstrap: 20
+  fisher_simulations: 50
+  gam_kcheck: 9
+  gam_simulations: 20
+components:
+  mapping: [COMP01, COMP02, COMP04, COMP06]
+  contexts: 12
+  comparisons: 288
+  BH_family_size: 24
+  selected_statistic: maximum_absolute_rho_among_six_summaries
+calibration:
+  pooled_apparent: refit_each_participant_bootstrap
+  cohort_apparent: conditional_assessment_of_fixed_full_cohort_update
+  heldout: conditional_assessment_of_fixed_predictions
+  clip_epsilon: 1.0e-6
