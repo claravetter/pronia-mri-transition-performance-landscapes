@@ -1,6 +1,6 @@
 # Tests and reproducibility
 
-Supported test environment: macOS, R 4.5.2 and Python 3.14.4, using the exact versions in `renv.lock` and `requirements.lock`. Restore dependencies as described in [README](README.md). [VALIDATION_SOURCE.json](VALIDATION_SOURCE.json) records SHA-256 values for the tested source and configuration.
+Supported test environment: macOS, R 4.5.2 and Python 3.14.4, using the exact versions in `renv.lock` and `requirements.lock`. Restore dependencies as described in [README](README.md).
 
 Run from the repository root:
 
