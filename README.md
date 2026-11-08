@@ -17,8 +17,6 @@ export R_LIBS_USER="$PWD/.Rlibrary"
 
 `renv.lock` specifies exact R package versions. The restore script installs packages into `.Rlibrary` and verifies exact versions, including recommended packages supplied by R itself. It does not read participant data or run analyses. `requirements.lock` pins the Python packages, including transitive dependencies. These are software environment locks, not statistical result snapshots.
 
-Parallel resampling uses Unix fork workers (tested on macOS); on Windows, use `--cores 1`. For strict repeat comparisons, set `OPENBLAS_NUM_THREADS=1` and `OMP_NUM_THREADS=1` before starting the pipeline. Other numerical libraries or thread settings can produce small floating-point differences, so output comparisons use an explicit tolerance (default 1e-10).
-
 ## Run
 
 A complete small-resample check generates its own synthetic input and writes to a new external directory:
