@@ -2,7 +2,7 @@
 
 Research software for PRONIA context/landscape analyses. One driver consumes one scientific configuration, computes from authorized cohort records and frozen upstream model outputs, then renders that run's statistical exports. No saved statistical results or synthetic dataset is used as a substitute for computation.
 
-The repository contains source, tests, configuration, dependency locks and documentation. Participant data, fitted models, empirical outputs, manuscripts, anatomical exports and atlas spreadsheets are supplied separately and are not distributed here. Original MRI preprocessing/model training and historical BrainAGE correction are upstream dependencies.
+The repository contains source, tests, configuration and dependency locks. Participant data, fitted models, empirical outputs, manuscripts, anatomical exports and atlas spreadsheets are supplied separately and are not distributed here. Original MRI preprocessing/model training and historical BrainAGE correction are upstream dependencies.
 
 ## Install
 
@@ -54,7 +54,7 @@ Statistical figures are generated automatically. Anatomical Figure3 and Suppleme
   --anatomy-assets /authorized/anatomy_assets
 ```
 
-The external directory must contain `source_panels/`, `yeo/` and `aal3/` as described in [anatomy inputs](docs/ANATOMY_INPUTS.md). On an initial run without assets, the manifest records that anatomical figures were not requested. A later render with assets updates their hashes and provenance. A statistical-only rerender preserves previously generated anatomy only if its recorded output hashes still match, retaining its separate generating-source record in `anatomy_provenance`. Statistical analyses do not depend on those assets. Optional `--component-map-dir` records availability of the original NIfTI maps without changing fixed expression inputs.
+The external directory must contain `source_panels/`, `yeo/` and `aal3/`. On an initial run without assets, the manifest records that anatomical figures were not requested. A later render with assets updates their hashes and provenance. A statistical-only rerender preserves previously generated anatomy only if its recorded output hashes still match, retaining its separate generating-source record in `anatomy_provenance`. Statistical analyses do not depend on those assets. Optional `--component-map-dir` records availability of the original NIfTI maps without changing fixed expression inputs.
 
 Plot an already computed run without refitting:
 
@@ -106,7 +106,7 @@ Rscript tests/test_production.R
 
 Tests generate bounded examples in memory or temporary files. They verify production functions, not copied study results. The optional `tests/compare_results.py` compares a completed run with a separately supplied reference, reporting missing/schema/numeric differences. References are never production inputs.
 
-Inspect `RUN_STATUS.txt`, `run_manifest.json`, `tables/resampling_validity_registry.csv` and `tables/method_review_required.csv` after execution. See [method boundaries](docs/METHOD_CONTRACT.md), [output map](docs/SOURCE_TO_MANUSCRIPT.md) and [tests](VALIDATION.md). In empirical runs, `private/` contains protected records, row identities and fitted objects. Keep the entire output directory outside this code repository and apply cohort disclosure rules before sharing any output.
+Inspect `RUN_STATUS.txt`, `run_manifest.json`, `tables/resampling_validity_registry.csv` and `tables/method_review_required.csv` after execution. See [tests](VALIDATION.md). In empirical runs, `private/` contains protected records, row identities and fitted objects. Keep the entire output directory outside this code repository and apply cohort disclosure rules before sharing any output.
 
 ## Licence
 

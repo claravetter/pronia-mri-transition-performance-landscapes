@@ -19,6 +19,6 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python python/run_pipeline.py
 Rscript --vanilla tests/verify_computed_run.R ../local_runs/test_run
 ```
 
-This computes the configured analyses and statistical figures from newly generated input. The statistical run has 22 output assertions. Optional anatomy tests require the [external assets](docs/ANATOMY_INPUTS.md). The MRIcroGL launcher requires a new output directory and verifies all four panels and the completion marker; its timeout bounds incomplete renders. Empirical runs require authorized inputs and the full configuration; generated-data tests do not validate historical model training, cohort harmonization or clinical use.
+This computes the configured analyses and statistical figures from newly generated input. The statistical run has 22 output assertions. Optional anatomy tests require the external anatomical assets (`source_panels/`, `yeo/`, `aal3/`). The MRIcroGL launcher requires a new output directory and verifies all four panels and the completion marker; its timeout bounds incomplete renders. Empirical runs require authorized inputs and the full configuration; generated-data tests do not validate historical model training, cohort harmonization or clinical use.
 
 Resampling streams are indexed independently of worker scheduling. Use one worker on Windows. Floating-point results can vary with numerical libraries and thread settings; numerical comparisons use explicit tolerances.

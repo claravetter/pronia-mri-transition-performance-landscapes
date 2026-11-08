@@ -41,7 +41,7 @@ The importer accepts CSV missing values `NA` and empty fields. Do not replace mi
 | `EXP_LABEL` | 0=no recorded transition, 1=transition during the cohort-specific observation period | Binary endpoint; not a common-horizon survival outcome |
 | `PRED_LABEL` | Inherited fixed classifier decision, 0/1 | Do not derive a replacement from score sign or a new probability threshold |
 | `Mean_Score` | Frozen continuous MRI classifier score; higher values indicate greater transition risk | Model-specific score units, not probability |
-| `Probs_platt` | Supplied original Platt-scaled probability in [0,1] | See [probability provenance](../docs/PROVENANCE.md); historical export settings require the provider's records |
+| `Probs_platt` | Supplied original Platt-scaled probability in [0,1] | Historical export settings require the provider's records |
 | `age` | Chronological age at the supplied assessment | Years |
 | `sex` | Recorded 1=male, 2=female | Categorical; missingness preserved |
 | `COGDIS_score` | Supplied cognitive-disturbance summary | Instrument score; exact item aggregation/range must be confirmed by the input provider |
@@ -53,7 +53,7 @@ The importer accepts CSV missing values `NA` and empty fields. Do not replace mi
 | `BrainAGE_SBC_corr` | Primary corrected predicted-age minus chronological-age gap | Years; identity with predicted age minus age is checked |
 | `Comp1`–`Comp4` | Fixed subject-level component expression | Model-specific dot-product units; respectively COMP01, COMP02, COMP04, COMP06 |
 
-Fixed outcome/class/score/probability/component values are validated before inference; required covariates determine each analysis's complete-case population. Imported derived z-score columns are not authoritative input fields. The [method contract](../docs/METHOD_CONTRACT.md) specifies complete-case and held-out scaling.
+Fixed outcome/class/score/probability/component values are validated before inference; required covariates determine each analysis's complete-case population. Imported derived z-score columns are not authoritative input fields. Scaling is computed within each complete-case or held-out training population.
 
 ## Upstream models and cohort endpoints
 
