@@ -106,7 +106,7 @@ Rscript tests/test_production.R
 
 Tests generate bounded examples in memory or temporary files. They verify production functions, not copied study results. The optional `tests/compare_results.py` compares a completed run with a separately supplied reference, reporting missing/schema/numeric differences. References are never production inputs.
 
-Inspect `RUN_STATUS.txt`, `run_manifest.json`, `tables/resampling_validity_registry.csv` and `tables/method_review_required.csv` after execution. See [tests](VALIDATION.md). In empirical runs, `private/` contains protected records, row identities and fitted objects. Keep the entire output directory outside this code repository and apply cohort disclosure rules before sharing any output.
+Inspect `RUN_STATUS.txt`, `run_manifest.json`, `tables/resampling_validity_registry.csv` and `tables/method_review_required.csv` after execution. In empirical runs, `private/` contains protected records, row identities and fitted objects. Keep the entire output directory outside this code repository and apply cohort disclosure rules before sharing any output.
 
 ## Licence
 
