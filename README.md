@@ -64,6 +64,38 @@ Plot an already computed run without refitting:
 
 Full settings include 5000 permutations, 2000 local AUC/pooled-calibration/LOCO bootstraps and separately defined 500-replicate calibration assessments. Synthetic settings are smaller and explicitly labelled. Production refuses existing output directories and paths inside the checkout, including symlink aliases. `--help` and imports do not read participant data or perform inference.
 
+## External-validation analyses
+
+The scripts in `R/analyses/` compute the remaining external-validation results of the paper. They reuse the helpers in `R/lib/`, so populations, windows and resampling streams match the main pipeline, and they write aggregate tables and figures only. Run them from the repository root with an output directory outside the checkout. If the input contains the documented duplicate key, set `PRONIA_CORRECTION_JSON` to the same record that `--correction` takes. `main_figures.R` also needs the R package `patchwork`.
+
+```sh
+export PRONIA_CORRECTION_JSON=/authorized/pronia_duplicate_resolution.json
+INPUT=/authorized/all_cohorts_data.csv; OUT=/authorized/results/external_validation
+Rscript R/analyses/external_auc_synthesis_and_calibration.R  $INPUT $OUT .
+Rscript R/analyses/reference_shift_added_value_net_benefit.R $INPUT $OUT . 8
+Rscript R/analyses/casemix_standardization.R                 $INPUT $OUT .
+Rscript R/analyses/component_separation.R                    $INPUT $OUT . 8
+Rscript R/analyses/scanner_site_check.R                      $INPUT $OUT . [SITE_MAP.csv]
+Rscript R/analyses/landscape_power_simulation.R              $INPUT $OUT . 9 1000 199
+Rscript R/analyses/negative_symptom_moderation_by_cohort.R   $INPUT $OUT .
+Rscript R/analyses/napls3_subgroups_and_image_quality.R      $INPUT /authorized/napls3_covariates.csv $OUT .
+Rscript R/analyses/pronia_profile_premorbid_onset_timing.R   $INPUT /authorized/pronia_pas_t0.csv /authorized/pronia_visits.csv $OUT .
+Rscript R/analyses/main_figures.R                            $INPUT $OUT .
+```
+
+| Script | Content |
+|---|---|
+| `external_auc_synthesis_and_calibration.R` | Random-effects synthesis of external AUCs (Hartung-Knapp CI, prediction interval); cohorts used vs not used in the original report; calibration by cohort after intercept updating |
+| `reference_shift_added_value_net_benefit.R` | PRONIA CHR-P reference; score distributions by cohort and outcome and what a per-cohort shift can explain; landscape robustness to population composition; symptom regression with and without the MRI score per held-out cohort; decision curves |
+| `casemix_standardization.R` | Membership regressions and case-mix-standardized AUC of PRONIA CHR-P participants reweighted to each external cohort |
+| `component_separation.R` | Separation of participants with and without transition on the MRI score and its 4 components, by cohort, with bootstrap tests of component-specific loss |
+| `scanner_site_check.R` | Within-site AUC and site offsets of nontransition scores in multi-site cohorts |
+| `landscape_power_simulation.R` | Operating characteristics of the sliding-window test at the study's sample sizes |
+| `negative_symptom_moderation_by_cohort.R` | MRI-score AUC below vs above the cohort median SIPS negative score and the score × SIPS-N interaction per cohort |
+| `napls3_subgroups_and_image_quality.R` | NAPLS-3 discrimination by CHR-P subtype, site, image quality and global gray matter volume |
+| `pronia_profile_premorbid_onset_timing.R` | PRONIA CHR-P clinical profile by outcome, premorbid adjustment, and discrimination by whether the onset was documented at a study visit; needs the PRONIA participant number in `PatID` and the PRONIA PAS and visit exports |
+| `main_figures.R` | Figures 1 and 2 and the supplementary figures built from the outputs above; runs last |
+
 ## Tests
 
 ```sh
